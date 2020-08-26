@@ -1,0 +1,43 @@
+{
+  "name": "@barktler-api/weather-dot-gov",
+  "version": "1.0.0",
+  "description": ":dizzy: Weather.Gov API implement",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/barktler/API-Weather-Dot-Gov.git"
+  },
+  "keywords": [
+    "API"
+  ],
+  "author": "WMXPY",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/barktler/API-Weather-Dot-Gov/issues"
+  },
+  "homepage": "https://github.com/barktler/API-Weather-Dot-Gov#readme",
+  "peerDependencies": {
+    "@barktler/core": "*"
+  },
+  "devDependencies": {
+    "@barktler/core": "^2.1.0",
+    "@barktler/driver-axios": "^2.0.0",
+    "@barktler/driver-mock": "^2.0.0",
+    "@sudoo/io": "^1.8.0",
+    "@sudoo/triforce": "^2.8.2"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/**/*.ts"
+    ],
+    "instrument": true,
+    "reporter": [
+      "json",
+      "text-summary"
+    ],
+    "report-dir": "coverage",
+    "sourceMap": true
+  }
+}

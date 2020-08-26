@@ -1,0 +1,18 @@
+{
+    "cSpell.words": [
+        "RMRF",
+        "WMXPY",
+        "appid",
+        "appinfo",
+        "barktler",
+        "camelcase",
+        "codecov",
+        "mocharc",
+        "steamid",
+        "sudoo",
+        "triforce"
+    ],
+    "eslint.options": {
+        "configFile": "./typescript/.eslintrc.json"
+    }
+}
