@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @namespace Weather_Dot_Gov_Declare
- * @description Owned Games
+ * @description Alerts
  */
 
 import { GeoJsonPolygon } from "@sudoo/geometry";
