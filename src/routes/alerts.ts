@@ -10,17 +10,19 @@ import { WeatherAlertFeature, WeatherAlertResponse, WeatherAlertResponsePattern 
 
 export class WeatherDotGovAlertsAPI extends Barktler<any, WeatherAlertResponse> {
 
-    public static create(email: string): WeatherDotGovAlertsAPI {
+    public static create(entity: string, email: string): WeatherDotGovAlertsAPI {
 
-        return new WeatherDotGovAlertsAPI(email);
+        return new WeatherDotGovAlertsAPI(entity, email);
     }
 
+    private readonly _entity: string;
     private readonly _email: string;
 
-    private constructor(email: string) {
+    private constructor(entity: string, email: string) {
 
         super();
 
+        this._entity = entity;
         this._email = email;
         super._declareResponseDataPattern(WeatherAlertResponsePattern);
     }
@@ -32,7 +34,7 @@ export class WeatherDotGovAlertsAPI extends Barktler<any, WeatherAlertResponse> 
             url: 'https://api.weather.gov/alerts/active',
             method: 'GET',
             headers: {
-                'User-Agent': this._email,
+                'User-Agent': `(${this._entity}, ${this._email})`,
             },
             params: {
                 area: state,
