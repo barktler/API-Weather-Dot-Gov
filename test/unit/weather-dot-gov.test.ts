@@ -15,7 +15,10 @@ describe('Given {WeatherDotGovAPI} Class', (): void => {
 
     it('should be able to construct', (): void => {
 
-        const factory: WeatherDotGovAPI = WeatherDotGovAPI.create(chance.string());
+        const entity: string = chance.string();
+        const email: string = chance.string();
+
+        const factory: WeatherDotGovAPI = WeatherDotGovAPI.create(entity, email);
 
         expect(factory).to.be.instanceOf(WeatherDotGovAPI);
     });
