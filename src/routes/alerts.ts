@@ -5,7 +5,8 @@
  */
 
 import { Barktler } from "@barktler/core";
-import { WeatherAlertResponse, WeatherAlertResponsePattern } from "../declare/alerts";
+import { GeoJsonPolygon, reverseGeoJsonPolygonTuples } from "@sudoo/geometry";
+import { WeatherAlertFeature, WeatherAlertResponse, WeatherAlertResponsePattern } from "../declare/alerts";
 
 export class WeatherDotGovAlertsAPI extends Barktler<any, WeatherAlertResponse> {
 
@@ -24,7 +25,7 @@ export class WeatherDotGovAlertsAPI extends Barktler<any, WeatherAlertResponse> 
         super._declareResponseDataPattern(WeatherAlertResponsePattern);
     }
 
-    public async fetchByState(state: string): Promise<WeatherAlertResponse> {
+    public async fetchByState(state: string): Promise<WeatherAlertFeature[]> {
 
         const response: WeatherAlertResponse = await this._requestForData({
 
@@ -37,6 +38,43 @@ export class WeatherDotGovAlertsAPI extends Barktler<any, WeatherAlertResponse> 
                 area: state,
             },
         });
-        return response;
+
+        const features: WeatherAlertFeature[] = [];
+        for (const feature of response.features) {
+
+            const geometry: GeoJsonPolygon | null = feature.geometry
+                ? reverseGeoJsonPolygonTuples(feature.geometry)
+                : null;
+
+            features.push({
+                ...feature,
+                geometry,
+                properties: {
+                    id: feature.properties.id,
+                    areaDesc: feature.properties.areaDesc,
+                    geocode: feature.properties.geocode,
+                    status: feature.properties.status,
+                    messageType: feature.properties.messageType,
+                    category: feature.properties.category,
+                    severity: feature.properties.severity,
+                    certainty: feature.properties.certainty,
+                    urgency: feature.properties.urgency,
+                    event: feature.properties.event,
+                    sender: feature.properties.sender,
+                    senderName: feature.properties.senderName,
+                    headline: feature.properties.headline,
+                    description: feature.properties.description,
+                    instruction: feature.properties.instruction,
+                    response: feature.properties.response,
+                    sent: new Date(feature.properties.sent),
+                    effective: new Date(feature.properties.effective),
+                    onset: new Date(feature.properties.onset),
+                    expires: new Date(feature.properties.expires),
+                    ends: new Date(feature.properties.ends),
+                },
+            });
+        }
+
+        return features;
     }
 }
